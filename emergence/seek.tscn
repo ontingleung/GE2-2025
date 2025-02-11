@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://cdl7pxjuqykwe"]
 
-[ext_resource type="Script" uid="uid://cks4uwsgfyggy" path="res://boid.gd" id="1_g7hsx"]
-[ext_resource type="Script" uid="uid://c0cjj7oaklbit" path="res://TPCamera.gd" id="3_p2fuv"]
-[ext_resource type="Script" uid="uid://df0wbq4s31n0w" path="res://timer.gd" id="3_tgpyc"]
+[ext_resource type="Script" path="res://boid.gd" id="1_g7hsx"]
+[ext_resource type="Script" path="res://TPCamera.gd" id="3_p2fuv"]
+[ext_resource type="Script" path="res://timer.gd" id="3_tgpyc"]
 [ext_resource type="Script" path="res://PathDrawer.gd" id="4_p2fuv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tgpyc"]
@@ -48,7 +48,6 @@ environment = SubResource("Environment_dik45")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.70418, 0.8565, -23.589)
 script = ExtResource("1_g7hsx")
 target = NodePath("../Marker3D")
-arrive_enabled = false
 arrive_target = NodePath("../Marker3D")
 slowing_distance = 10
 path = NodePath("../Path3D")

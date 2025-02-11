@@ -8,11 +8,35 @@ extends CharacterBody3D
 var max_speed = 10
 
 @export var seek_enabled = false
-@export var arrive_enabled = true
+@export var arrive_enabled = false
 @export var arrive_target:Node3D
 @export var slowing_distance = 20
 
 @export var banking:float = 1
+@export var damping:float = 1
+
+@export var player_steering_enabled:bool = true
+@export var s_force:float = 10
+
+
+func player_steering():
+	var s = Input.get_axis("move_back", "move_forward")
+	var f:Vector3 = Vector3.ZERO
+	
+	
+	f = global_basis.z * s * s_force
+	
+	var l = Input.get_axis("turn_left", "turn_right")
+	var xz_direction = global_basis.x
+	xz_direction.y = 0
+	
+	f -= xz_direction * l * s_force
+	xz_direction.normalized()
+	DebugDraw2D.set_text("Gloabl basis: ", global_basis)
+	
+	return f
+	
+	pass
 
 func arrive(target) -> Vector3:
 	var to_target = target.global_position - global_position
@@ -37,6 +61,10 @@ func draw_gizmos():
 	DebugDraw3D.draw_arrow(global_position, global_position + velocity, Color.CRIMSON, 0.1)
 	DebugDraw3D.draw_arrow(global_position, global_position + global_basis.y * 10, Color.CRIMSON, 0.1)
 	DebugDraw3D.draw_sphere(arrive_target.global_position, slowing_distance, Color.BURLYWOOD)
+	DebugDraw2D.set_text("Veocity:", velocity)
+	
+	DebugDraw3D.draw_arrow(global_position, global_position + global_basis.x * 10, Color.CRIMSON, 0.1)
+
 
 func calculate():
 	var f:Vector3 = Vector3.ZERO	
@@ -46,11 +74,13 @@ func calculate():
 		f += arrive(arrive_target)
 	if path_follow_enabled:
 		f += follow_path()
+	if player_steering_enabled:
+		f += player_steering()
 	return f
 
 @export var path:Path3D
 
-@export var path_follow_enabled:bool = true
+@export var path_follow_enabled:bool = false
 var path_index = 0
 var looped = false
 	
@@ -76,7 +106,8 @@ func _process(delta: float) -> void:
 		# https://www.cs.toronto.edu/~dt/siggraph97-course/cwr87/
 		var tempUp = transform.basis.y.lerp(Vector3.UP + (accel * banking), delta * 5.0)
 		look_at(global_transform.origin - velocity, tempUp)
-
+		
+		velocity = velocity - (velocity * damping * delta)
 		# look_at(global_position + velocity)
 		# global_position += velocity * delta
 		
