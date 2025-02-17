@@ -9,6 +9,8 @@ var max_speed = 10
 
 @export var seek_enabled = false
 @export var arrive_enabled = false
+@export var pursue_enabled = false
+@export var pursue_target:CharacterBody3D
 @export var arrive_target:Node3D
 @export var slowing_distance = 20
 
@@ -17,6 +19,16 @@ var max_speed = 10
 
 @export var player_steering_enabled:bool = true
 @export var s_force:float = 10
+
+func pursue(pursue_target):
+	var dist = (pursue_target.global_position - )
+	
+	var time = dist / max_speed
+	
+	var projected = pursue_target.global_position + (pursue_)
+	pass
+	
+
 
 
 func player_steering():
@@ -32,6 +44,7 @@ func player_steering():
 	
 	f -= xz_direction * l * s_force
 	xz_direction.normalized()
+	
 	DebugDraw2D.set_text("Gloabl basis: ", global_basis)
 	
 	return f
@@ -54,6 +67,9 @@ func seek(target) -> Vector3:
 	
 
 func _ready() -> void:
+	
+	
+	
 	pass
 	
 func draw_gizmos():
@@ -76,6 +92,7 @@ func calculate():
 		f += follow_path()
 	if player_steering_enabled:
 		f += player_steering()
+	if pursue_enabled()
 	return f
 
 @export var path:Path3D

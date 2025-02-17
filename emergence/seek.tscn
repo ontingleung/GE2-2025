@@ -48,9 +48,20 @@ environment = SubResource("Environment_dik45")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.70418, 0.8565, -23.589)
 script = ExtResource("1_g7hsx")
 target = NodePath("../Marker3D")
+force = null
+accel = null
+mass = null
+seek_enabled = null
+arrive_enabled = null
+pursue_enabled = null
 arrive_target = NodePath("../Marker3D")
 slowing_distance = 10
+banking = null
+damping = null
+player_steering_enabled = null
+s_force = null
 path = NodePath("../Path3D")
+path_follow_enabled = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="boid"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
